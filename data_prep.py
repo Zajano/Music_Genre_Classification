@@ -6,6 +6,7 @@ from notebook_functions import *
 from pydub import AudioSegment
 from song_lists import *
 from pathlib import Path
+from config import *
 
 import eyed3, os, shutil
 import pandas as pd
@@ -13,12 +14,12 @@ import pandas as pd
 print("Importing and prepping data for processing...")
 
 # set string paths to directory locations for extracted data
-data_dir =          # path to data driectory, eg: "C:\\Users\\user\\Desktop\\data"
-fma_exraction =     # directory name of FMA extraction location eg: "fma_medium"
-fma_met_extract =   # directory name of FMA metadata extraction location eg: "fma_metadata"
-gtzan_extraction =  # directory name of FMA extraction location eg: "GTZAN"
+#data_dir =          # path to data driectory, eg: "C:\\Users\\user\\Desktop\\data"
+#fma_exraction =     # directory name of FMA extraction location eg: "fma_medium"
+#fma_met_extract =   # directory name of FMA metadata extraction location eg: "fma_metadata"
+#gtzan_extraction =  # directory name of FMA extraction location eg: "GTZAN"
 
-fma_dir = os.path.join(data_dir, fma_exraction)
+fma_dir = os.path.join(data_dir, fma_extraction)
 gtzan_dir = os.path.join(data_dir, gtzan_extraction)
 fma_metadata = os.path.join(data_dir, fma_met_extract)
 
@@ -62,10 +63,10 @@ preserved_genres = ["Psych-Rock", "Post-Rock", "Ambient Electronic", "Techno", \
 # create directories to move songs into
 sample_dir_name = "audio_samples"
 sample_dir = os.path.join(data_dir, sample_dir_name)
-Path(sample_dir).mkdir(exist_ok=True)
+Path(sample_dir).mkdir(mode=0o777, parents=False, exist_ok=True)
 for genre in target_genres:
     genre_dir = os.path.join(sample_dir, genre)
-    Path(genre_dir).mkdir(exist_ok=True)
+    Path(genre_dir).mkdir(mode=0o777, parents=False, exist_ok=True)
 
 def genre_fix(song_genre, filename):
     '''adjusts current genres to be of only target genres'''
@@ -81,6 +82,7 @@ def genre_fix(song_genre, filename):
 print("Starting to re-label and move songs...")
 # re-label and move FMA samples
 for i in range(len(fma_paths)):
+    os.chmod(fma_paths[i], 0o777)
     if i == len(fma_paths)//2:
         print("Halfway done!")
     filename = fma_paths[i][-10:-4]
