@@ -6,19 +6,14 @@ def make_file_list(root_dir):
         and file names'''
     
     path_list = []
-    songs = []
+    filenames = []
     for subdir, dirs, files in os.walk(root_dir):
-        songs.extend(files)
+        filenames.extend(files)
         for file in files:
             if file.endswith(('.mp3', '.wav')):
                 path_list.append(os.path.join(subdir, file))
 
-    return path_list, songs
-
-def genre_fix(current_genre):
-    '''given a'''
-    for subdir, dirs, files in os.walk(root_dir):
-        return files
+    return path_list, filenames
 
 def get_genre_id(genre_dict_list):
     return genre_dict_list[0]['genre_id']

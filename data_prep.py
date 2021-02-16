@@ -13,13 +13,17 @@ import pandas as pd
 print("Importing and prepping data for processing...")
 
 # set string paths to directory locations for extracted data
-data_dir = # path to data driectory, eg: "C:\\Users\\user\\Desktop\\data"
-fma_dir = data_dir + # directory name of FMA extraction location eg: "\\fma_medium"
-gtzan_dir = data_dir + # directory name of GTZAN extraction location eg:"\\GTZAN"
-fma_metadata = data_dir + # directory name of FMA metadata extraction location eg:"\\fma_metadata"
+data_dir =          # path to data driectory, eg: "C:\\Users\\user\\Desktop\\data"
+fma_exraction =     # directory name of FMA extraction location eg: "fma_medium"
+fma_met_extract =   # directory name of FMA metadata extraction location eg: "fma_metadata"
+gtzan_extraction =  # directory name of FMA extraction location eg: "GTZAN"
+
+fma_dir = os.path.join(data_dir, fma_exraction)
+gtzan_dir = os.path.join(data_dir, gtzan_extraction)
+fma_metadata = os.path.join(data_dir, fma_met_extract)
 
 # if you want the unused songs deleted
-delete_unused = True
+delete_unused = False
 
 # ignore 'uncommon genre' warning
 eyed3.log.setLevel("ERROR")
@@ -56,10 +60,11 @@ preserved_genres = ["Psych-Rock", "Post-Rock", "Ambient Electronic", "Techno", \
                 "Indie-Rock", "Trip-Hop", "Punk", "House"]
 
 # create directories to move songs into
-sample_dir = data_dir + "\\audio_samples"
+sample_dir_name = "audio_samples"
+sample_dir = os.path.join(data_dir, sample_dir_name)
 Path(sample_dir).mkdir(exist_ok=True)
 for genre in target_genres:
-    genre_dir = sample_dir + "\\" + genre
+    genre_dir = os.path.join(sample_dir, genre)
     Path(genre_dir).mkdir(exist_ok=True)
 
 def genre_fix(song_genre, filename):
@@ -76,6 +81,8 @@ def genre_fix(song_genre, filename):
 print("Starting to re-label and move songs...")
 # re-label and move FMA samples
 for i in range(len(fma_paths)):
+    if i == len(fma_paths)//2:
+        print("Halfway done!")
     filename = fma_paths[i][-10:-4]
     song_genre = genre_lookup[track_genre_lookup[int(filename)]]
     if filename not in fma_skips and song_genre not in fma_skips:
@@ -87,33 +94,40 @@ for i in range(len(fma_paths)):
         ########## TODO: finish screening song samples for Rock, Electric, and Punk
         ########## then remove this portion of the script
         skip_song = False
-        if song_genre == 'Electronic' and int(filename) <= 58343:
+        if song_genre == 'Electronic' and int(filename) > 58343:
             skip_song = True
         elif song_genre == 'Rock' and filename not in safe_rock:
             skip_song = True
-        elif song_genre == 'Punk' and int(filename) <= 93983:
+        elif song_genre == 'Punk' and int(filename) >= 93983:
             skip_song = True
 
         if not skip_song:
         ########## end of portion to remove
-            new_path = data_dir + "\\audio_samples\\" + song_genre + "\\" + fma_paths[i][-10:]
+            new_path = os.path.join(data_dir, sample_dir_name, song_genre, fma_paths[i][-10:])
             os.replace(fma_paths[i], new_path)
 
 print("Beginning GTZAN wav to mp3 conversions and moving...")
 # convert to mp3, move, and then re-label GTZAN songs
 for i in range(len(gtzan_paths)):
+    if i == len(gtzan_paths)//2:
+        print("Halfway done!")
     filename = gtzan_songs[i]
     for genre in gtzan_genres: 
         if genre in filename and filename not in gtzan_skips:
             genre = genre.capitalize()
-            new_file = data_dir + "\\audio_samples\\" + genre + "\\" + filename[:-4] + ".mp3"
+            new_file_name = filename[:-4] + ".mp3"
+            new_file = os.path.join(data_dir, sample_dir_name, genre, new_file_name)
             AudioSegment.from_wav(gtzan_paths[i]).export(new_file, format="mp3")
             audiofile = eyed3.load(new_file)
             audiofile.tag.genre = genre
             audiofile.tag.save()
 
 if delete_unused:
+    print("Deleting leftover files...")
     shutil.rmtree(fma_dir)
     shutil.rmtree(gtzan_dir)
+else:
+    print("Leftover files not deleted.")
 
 print("Done moving, re-labeling, and converting files.")
+
