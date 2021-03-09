@@ -5,7 +5,8 @@ gtzan_extraction = '/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Proj
 fma_met_extract = '/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/fma_metadata'
 
 ape_path = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/audio_samples"
-wav_path = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/wav_samples" 
 graph_path_parent = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/feature_graphs"
 
 genre_csvs_path = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/Music_Genre_Classification/April/030121_Classification_Attempt_03/Genre_CSVs"
+
+wav_path = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/wav_samples" 
