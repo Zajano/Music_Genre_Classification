@@ -1,5 +1,6 @@
 # functions for jupyter notebooks
-import os
+import os, librosa, eyed3
+import pandas as pd
 
 def make_file_list(root_dir):
     '''given a directory, loops through folders and files and return list of files paths

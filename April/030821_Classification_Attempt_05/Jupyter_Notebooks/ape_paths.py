@@ -4,6 +4,7 @@ fma_extraction = '/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Projec
 gtzan_extraction = '/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/genres'# directory name of GTZAN extraction location eg:"\\GTZAN"
 fma_met_extract = '/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/fma_metadata'
 
+z_path = 'C:\\Users\\Zack\\Desktop\\work\\OSU\\467_capstone\\data\\audio_samples'
 ape_path = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/audio_samples"
 wav_path = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/wav_samples" 
 graph_path_parent = r"/Volumes/APE_External/Dropbox/_Classes/21_Winter/CS_467/Project_Folder/fma/data/export2/feature_graphs"
