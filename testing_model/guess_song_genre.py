@@ -1,6 +1,14 @@
 from keras.models import load_model
 import numpy as np
-import librosa, os
+import librosa
+import os
+import sys
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ["PYTHONWARNINGS"] = "ignore"
+if not sys.warnoptions:
+    import warnings
+    warnings.simplefilter("ignore")
+
 
 clear = lambda: os.system('cls')
 
@@ -61,7 +69,8 @@ labels_dict = {
     17: 'Trip-Hop'
 }
 
-clear()
-print(predictions[0])
-print(choice[0])
+# print(predictions[0])
+# print(choice[0])
+print('I predict the genre of ' + user_song + ' is: ')
 print(labels_dict[choice[0]])
+# print(pred_list[0])
