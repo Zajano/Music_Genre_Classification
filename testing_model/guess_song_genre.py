@@ -1,7 +1,10 @@
 from keras.models import load_model
 import numpy as np
-import librosa
+import librosa, os
 
+clear = lambda: os.system('cls')
+
+clear()
 print("What's the filename of the song you would like me to guess the genre of?")
 user_song = input("Filename (include extension): ")
 
@@ -36,7 +39,6 @@ cnn_model = load_model('model_030921.h5')
 # Making predictions from the cnn model
 predictions = cnn_model.predict(mel_specs, verbose=0)
 choice = cnn_model.predict_classes(mel_specs, verbose=0)
-# pred_list = cnn_model.predict_log_proba(mel_specs)
 
 labels_dict = {
     0: 'Ambient Electronic',
@@ -59,7 +61,7 @@ labels_dict = {
     17: 'Trip-Hop'
 }
 
+clear()
 print(predictions[0])
 print(choice[0])
 print(labels_dict[choice[0]])
-# print(pred_list[0])
