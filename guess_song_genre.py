@@ -30,5 +30,5 @@ cnn_model = load_model('model_030921.h5')
 # Making predictions from the cnn model
 prediction = cnn_model.predict(spect, verbose=1)
 pred_list = cnn_model.predict_log_proba(spect)
-
+print('I predict the genre of ' + user_song + ' is: ')
 print(prediction)
